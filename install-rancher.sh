@@ -91,13 +91,13 @@ echo "$ssh_rsa_pub" > $home/.ssh/authorized_keys
 sudo chown -R $owner $home/.ssh
 sudo chmod  600 $home/.ssh/*
 
-[ -z $(hostname  | grep 'vm1$') ] && cp $info_file $home
+[ -z $(hostnamectl --static  | grep 1) ] && cp $info_file $home
 
 
 
 # RUN ONLY ON ONE MACHINE
 
-[ -z $(hostname  | grep 'vm1$') ] && exit
+[ -z $(hostnamectl --static  | grep 1) ] && exit
 
 
 
