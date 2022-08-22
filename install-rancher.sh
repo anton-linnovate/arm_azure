@@ -155,6 +155,7 @@ do
 EOF
   i=$((++i))
 done
+sudo cp $info_file $home
 sudo cp $file_name $home
 sudo chown $owner $home/$filename
 
@@ -181,8 +182,8 @@ echo "***RUN: $home/run_rke.sh as user '$user'"
 
 sudo cat > $home/run_rke.sh <<'EOF'
 #!/bin/bash
-u=$(id | grep root | awk -F'=' '{print $1}')
-if [ ! -z $u ]; then
+u=$(whoami)
+if [ $u -eq root ]; then
   echo "Can't be run as root"
   exit 1
 fi
@@ -208,5 +209,6 @@ echo "sudo helm3 install rancher rancher-latest/rancher --namespace cattle-syste
 echo "echo hostname = '$fqdn'" >> $home/run_rke.sh 
 echo "echo '*************  End of story  *************'" >> $home/run_rke.sh 
 
-cd $home 
-su -c "bash -xv run_rke.sh" - $user
+sudo cd $home
+sudo chmod +x run_rke.sh
+sudo ./run_rke.sh
