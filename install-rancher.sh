@@ -91,7 +91,7 @@ echo "$ssh_rsa_pub" > $home/.ssh/authorized_keys
 sudo chown -R $owner $home/.ssh
 sudo chmod  600 $home/.ssh/*
 
-[ -z $(hostnamectl --static  | grep 1) ] && cp $info_file $home
+[ -z $(hostnamectl --static  | grep 1) ] && sudo cp $info_file $home
 
 
 
@@ -164,9 +164,8 @@ echo | tee -a $info_file
 sudo cat $file_name | tee -a $info_file
 echo "********** END **********" | tee -a $info_file
 
-sudo cd /usr/local/bin
 sudo wget https://github.com/rancher/rke/releases/download/v1.2.0-rc15/rke_linux-amd64
-sudo mv rke_linux-amd64 rke
+sudo mv rke_linux-amd64 /usr/local/bin/rke
 sudo chmod +x rke
 sudo rke --version
 echo "$ssh_rsa" > $home/.ssh/id_rsa
@@ -205,7 +204,7 @@ sleep 15
 sudo kubectl get pods --namespace cert-manager
 EOF
 
-echo "helm3 install rancher rancher-latest/rancher --namespace cattle-system --set hostname=$fqdn" >> $home/run_rke.sh
+echo "sudo helm3 install rancher rancher-latest/rancher --namespace cattle-system --set hostname=$fqdn" >> $home/run_rke.sh
 echo "echo hostname = '$fqdn'" >> $home/run_rke.sh 
 echo "echo '*************  End of story  *************'" >> $home/run_rke.sh 
 
