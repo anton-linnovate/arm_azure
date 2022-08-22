@@ -1,5 +1,6 @@
 #!/bin/bash
 
+sudo -i
 info_file=infomation_on_$0.txt
 echo "Parameters list: $@" > $info_file
 apt-get update
