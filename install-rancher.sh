@@ -189,7 +189,7 @@ if [ $u -eq root ]; then
 fi
 sudo echo y | rke remove
 sudo rke up
-[ ! -d .kube ] && mkdir .kube
+[ ! -d .kube ] && sudo mkdir .kube
 sudo cp kube_config_cluster.yml .kube/config
 sudo export KUBECONFIG=./kube_config_cluster.yml
 sudo kubectl get nodes
