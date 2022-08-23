@@ -167,7 +167,7 @@ echo "********** END **********" | tee -a $info_file
 
 sudo wget https://github.com/rancher/rke/releases/download/v1.2.0-rc15/rke_linux-amd64
 sudo mv rke_linux-amd64 /usr/local/bin/rke
-sudo chmod +x rke
+sudo chmod +x /usr/local/bin/rke
 sudo rke --version
 echo "$ssh_rsa" > $home/.ssh/id_rsa
 echo "$ssh_rsa_pub" > $home/.ssh/id_rsa.pub
