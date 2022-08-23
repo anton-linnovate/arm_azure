@@ -190,9 +190,11 @@ if [ $u -eq root ]; then
 fi
 sudo echo y | rke remove
 sudo rke up
-[ ! -d .kube ] && sudo mkdir .kube
-sudo cp kube_config_cluster.yml .kube/config
-sudo export KUBECONFIG=./kube_config_cluster.yml
+sudo mkdir ~/.kube || sudo cp kube_config_cluster.yml ~/.kube/config
+sudo cp kube_config_cluster.yml ~/.kube/config
+sudo chmod 600 ~/.kube/config
+sudo export KUBECONFIG=~/.kube/config
+sudo echo "sudo export KUBECONFIG=/$home/$user/.kube/config" >> ~/.bashrc
 sudo kubectl get nodes
 sudo helm3 repo add rancher-latest https://releases.rancher.com/server-charts/latest
 sudo kubectl create namespace cattle-system
