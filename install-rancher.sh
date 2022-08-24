@@ -197,8 +197,9 @@ sudo rke up
 sudo mkdir ~/.kube || sudo cp kube_config_cluster.yml ~/.kube/config
 sudo cp kube_config_cluster.yml ~/.kube/config
 sudo chmod 600 ~/.kube/config
+sudo chown $user:$user ~/.kube/config
 export KUBECONFIG=~/.kube/config
-sudo echo "sudo export KUBECONFIG=/$home/$user/.kube/config" >> ~/.bashrc
+sudo echo "export KUBECONFIG=~/.kube/config" >> ~/.bashrc
 sudo kubectl get nodes
 sudo helm3 repo add rancher-latest https://releases.rancher.com/server-charts/latest
 sudo kubectl create namespace cattle-system
