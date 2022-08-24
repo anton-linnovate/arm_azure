@@ -234,8 +234,8 @@ sudo chown -R $user:$user /home/$user/
 pass=`kubectl get secret --namespace cattle-system bootstrap-secret -o go-template='{{.data.bootstrapPassword|base64decode}}{{"\n"}}'`
 
 sudo bash -c 'echo -e "Your rancher should be is available as \033[01;31m https://'$fqdn' \033[0m">> /etc/motd'
-sudo bash -c 'echo -e "initial password should be \033[01;31m '$pass' \033[0m">> /etc/motd'
-sudo bash -c 'echo -e "Standard user - \033[01;31m admin \033[0m">> /etc/motd'
+sudo bash -c 'echo -e "Initial password should be \033[01;31m '$pass' \033[0m">> /etc/motd'
+sudo bash -c 'echo -e "Standard username as \033[01;31m admin \033[0m">> /etc/motd'
 
 wall "Your rancher should be available at https://$fqdn"
 wall "password should be $pass"
