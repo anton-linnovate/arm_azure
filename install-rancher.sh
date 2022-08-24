@@ -1,5 +1,9 @@
 #!/bin/bash
 
+echo "starting Rancher cluster by hossted"
+sudo curl -k -XPOST https://vhd.linnovate.net/service?sw=Azure-ARM-Rancher3
+
+
 info_file=infomation_on_$0.txt
 echo "Parameters list: $@" > $info_file
 sudo apt-get update
