@@ -217,9 +217,8 @@ EOF
 echo "sudo helm install rancher rancher-latest/rancher --namespace cattle-system --set hostname=$fqdn" >> $home/run_rke.sh
 echo "echo hostname = '$fqdn'" >> $home/run_rke.sh 
 echo "echo '*************  End of story  *************'" >> $home/run_rke.sh 
+
 sudo chown -R $user:$user ~/
-
-
 sudo chmod +x run_rke.sh
 su -c "bash -xv run_rke.sh" - $user
 
