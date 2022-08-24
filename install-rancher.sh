@@ -214,5 +214,6 @@ echo "echo '*************  End of story  *************'" >> $home/run_rke.sh
 
 su $user
 cd $home
+pwd
 sudo chmod +x run_rke.sh
 sudo bash run_rke.sh
