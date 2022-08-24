@@ -181,6 +181,10 @@ sudo helm3 version
 
 echo "***RUN: $home/run_rke.sh as user '$user'"
 
+su $user
+cd $home
+pwd > pwd.txt
+
 sudo cat > $home/run_rke.sh <<'EOF'
 #!/bin/bash
 u=$(whoami)
@@ -212,8 +216,5 @@ echo "sudo helm3 install rancher rancher-latest/rancher --namespace cattle-syste
 echo "echo hostname = '$fqdn'" >> $home/run_rke.sh 
 echo "echo '*************  End of story  *************'" >> $home/run_rke.sh 
 
-su $user
-cd $home
-pwd
 sudo chmod +x run_rke.sh
-sudo bash run_rke.sh
+su -c 'run_rke.sh' $user
