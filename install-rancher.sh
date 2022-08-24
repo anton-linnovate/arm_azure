@@ -193,7 +193,7 @@ sudo rke up
 sudo mkdir ~/.kube || sudo cp kube_config_cluster.yml ~/.kube/config
 sudo cp kube_config_cluster.yml ~/.kube/config
 sudo chmod 600 ~/.kube/config
-sudo export KUBECONFIG=~/.kube/config
+export KUBECONFIG=~/.kube/config
 sudo echo "sudo export KUBECONFIG=/$home/$user/.kube/config" >> ~/.bashrc
 sudo kubectl get nodes
 sudo helm3 repo add rancher-latest https://releases.rancher.com/server-charts/latest
@@ -214,4 +214,4 @@ echo "echo '*************  End of story  *************'" >> $home/run_rke.sh
 
 cd $home
 sudo chmod +x run_rke.sh
-sudo ./run_rke.sh
+sudo bash $HOME/run_rke.sh
