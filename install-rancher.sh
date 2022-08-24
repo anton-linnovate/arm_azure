@@ -212,6 +212,7 @@ echo "sudo helm3 install rancher rancher-latest/rancher --namespace cattle-syste
 echo "echo hostname = '$fqdn'" >> $home/run_rke.sh 
 echo "echo '*************  End of story  *************'" >> $home/run_rke.sh 
 
+su $user
 cd $home
 sudo chmod +x run_rke.sh
 sudo bash ~/run_rke.sh
