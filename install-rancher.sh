@@ -218,7 +218,6 @@ echo "sudo helm install rancher rancher-latest/rancher --namespace cattle-system
 echo "echo hostname = '$fqdn'" >> $home/run_rke.sh 
 echo "echo '*************  End of story  *************'" >> $home/run_rke.sh 
 
-sudo chown -R $user:$user ~/
 sudo chmod +x run_rke.sh
 su -c "bash -xv run_rke.sh" - $user
 
@@ -230,11 +229,13 @@ su -c "bash -xv run_rke.sh" - $user
 
 sleep 5m
 
+sudo chown -R $user:$user /home/$user
+
 pass=`kubectl get secret --namespace cattle-system bootstrap-secret -o go-template='{{.data.bootstrapPassword|base64decode}}{{"\n"}}'`
 
 sudo bash -c 'echo -e "Your rancher should be is available as \033[01;31m https://'$fqdn' \033[0m">> /etc/motd'
 sudo bash -c 'echo -e "initial password should be \033[01;31m '$pass' \033[0m">> /etc/motd'
-sudo bash -c 'echo -e "Standrt user - \033[01;31m admin \033[0m">> /etc/motd"'
+sudo bash -c 'echo -e "Standard user - \033[01;31m admin \033[0m">> /etc/motd'
 
 wall "Your rancher should be available at https://$fqdn"
 wall "password should be $pass"
