@@ -229,7 +229,7 @@ su -c "bash -xv run_rke.sh" - $user
 
 sleep 5m
 
-sudo chown -R $user:$user /home/$user
+sudo chown -R $user:$user /home/$user/
 
 pass=`kubectl get secret --namespace cattle-system bootstrap-secret -o go-template='{{.data.bootstrapPassword|base64decode}}{{"\n"}}'`
 
