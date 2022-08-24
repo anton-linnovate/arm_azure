@@ -175,9 +175,11 @@ echo "$ssh_rsa_pub" > $home/.ssh/id_rsa.pub
 sudo chown -R $owner $home/.ssh
 sudo chmod -R 600 $home/.ssh/*
 
-sudo apt-get install snapd
-sudo snap install helm3
-sudo helm3 version
+sudo curl https://baltocdn.com/helm/signing.asc | gpg --dearmor | sudo tee /usr/share/keyrings/helm.gpg > /dev/null
+sudo apt-get install apt-transport-https --yes
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/helm.gpg] https://baltocdn.com/helm/stable/debian/ all main" | sudo tee /etc/apt/sources.list.d/helm-stable-debian.list
+sudo apt-get update
+sudo apt-get install helm
 
 echo "***RUN: $home/run_rke.sh as user '$user'"
 
@@ -197,23 +199,23 @@ sudo rke up
 sudo mkdir ~/.kube || sudo cp kube_config_cluster.yml ~/.kube/config
 sudo cp kube_config_cluster.yml ~/.kube/config
 sudo chmod 600 ~/.kube/config
-sudo chown $user:$user ~/.kube/config
+sudo chown -R $user:$user ~/.kube
 export KUBECONFIG=~/.kube/config
 sudo echo "export KUBECONFIG=~/.kube/config" >> ~/.bashrc
 sudo kubectl get nodes
-sudo helm3 repo add rancher-latest https://releases.rancher.com/server-charts/latest
+sudo helm repo add rancher-latest https://releases.rancher.com/server-charts/latest
 sudo kubectl create namespace cattle-system
 sudo kubectl apply --validate=false -f https://github.com/jetstack/cert-manager/releases/download/v0.15.0/cert-manager.crds.yaml
 sudo kubectl create namespace cert-manager
-sudo helm3 repo add jetstack https://charts.jetstack.io
-sudo helm3 repo update
-sudo helm3 install cert-manager jetstack/cert-manager --namespace cert-manager --version v0.15.0
+sudo helm repo add jetstack https://charts.jetstack.io
+sudo helm repo update
+sudo helm install cert-manager jetstack/cert-manager --namespace cert-manager --version v0.15.0
 echo "Sleeping for 15 secondes"
 sleep 15
 sudo kubectl get pods --namespace cert-manager
 EOF
 
-echo "sudo helm3 install rancher rancher-latest/rancher --namespace cattle-system --set hostname=$fqdn" >> $home/run_rke.sh
+echo "sudo helm install rancher rancher-latest/rancher --namespace cattle-system --set hostname=$fqdn" >> $home/run_rke.sh
 echo "echo hostname = '$fqdn'" >> $home/run_rke.sh 
 echo "echo '*************  End of story  *************'" >> $home/run_rke.sh 
 
